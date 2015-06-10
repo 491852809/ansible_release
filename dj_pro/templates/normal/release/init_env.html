@@ -4,10 +4,23 @@
             <div  class="slider-bar progress-bar" role="progressbar" style="height:18px;width:((progress))%;">
                 <span>((progress|number:0))% </span>
             </div>
-            <div  class="slider-bar progress-bar progress-bar-info" role="progressbar" style="height:18px;width:((load-progress))%;">
-                <span>((load|number:0))% </span>
+        </div>
+        <div class="col-md-12 column alert alert-info" role="alert" ng-show="project_log">
+            <p>((project_log))</p>
+        </div>
+        <div class="col-md-12 column">
+            <div class="col-md-3 column">
+                <label>初始化系统ip：</label>
+            </div>
+            <div class="col-md-3 column">
+                <input class="form-control" ng-model='init_ip'>
             </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div ng-init="find_items()"> 
             <div ng-repeat="i in yml_set">
                 <div class="col-md-3 column selected">                                                          

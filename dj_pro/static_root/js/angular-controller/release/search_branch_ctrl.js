@@ -1,4 +1,4 @@
-routeapp.controller('search_branch_ctrl', function($scope, Project_Item ,$http) {
+routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item ,$http) {
     $scope.project_id = (window.location.pathname).split('/')[3];
     $scope.oneAtATime = true;   // not allow to open all project at one time
 
@@ -19,10 +19,39 @@ routeapp.controller('search_branch_ctrl', function($scope, Project_Item ,$http) 
     
     $scope.show_branch = false;
 
+    function common_post(url, ctype, pro){
+        console.log(pro);
+        $scope.pull_show = 'disabled';
+        $scope.wait_msg = '请稍作等待，不要切换页面，否则无法看到日志';
+        $scope.wait_flag = true;
+        $http({
+            method: 'POST',
+            url: url,
+            data: pro
+        }).success(function(result){
+            $scope.pull_show = '';
+            $scope.wait_flag = false;
+            $scope.wait_msg = '';
+            $state.go('search_branch');
+        }).error(function(err){
+            console.log('error');
+            $scope.pull_show = '';
+            $scope.wait_flag = false;
+            $scope.wait_msg = '';
+        });
+    };
+
     $scope.toggle_branch = function(pro_name ,showhide){
         $scope.branches[pro_name+'show'] = !showhide;
         console.log($scope.branches[pro_name+'show']);
         console.log(pro_name+'show');
+    };
+
+    $scope.git_pull = function(i){
+        item = {};
+        item['dir'] = i;
+        console.log(item);
+        common_post('/release/project_item_api/git_pull/', undefined, item);
     };
 
 

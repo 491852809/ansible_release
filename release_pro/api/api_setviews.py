@@ -10,6 +10,7 @@ from .models import *
 from .serializers import *
 from script.git_extra import Git_Extra
 from script.ansi_book import Ansi_Play
+from script.upyun_extra import Upyun_Api
 
 
 from datetime import *
@@ -137,6 +138,14 @@ class Project_ItemViewSet(viewsets.ModelViewSet):
             f.write(file_text)
         return 'log add ok'
 
+
+    @list_route(methods=['get', 'post'])
+    def git_pull(self, request, pk=None):
+        ansi = request.DATA['dir']
+        newlist = Git_Extra(git_dir=ansi).pull()
+        print newlist
+        return Response({'report': 'ok'})
+
     @list_route(methods=['get', 'post'])
     def process_search_yml(self, request, pk=None):
         ansi = request.DATA['dir']
@@ -190,7 +199,6 @@ class Project_ItemViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['get', 'post'])
     def backup_all(self, request, pk=None):
-        print 123123
         return self.multi_common(request, ansi='pro_ansi_backup_yml', action='backup')
 
     @list_route(methods=['get', 'post'])
@@ -204,19 +212,38 @@ class Project_ItemViewSet(viewsets.ModelViewSet):
 
     @list_route(methods=['get', 'post'])
     def yml_exe(self, request, pk=None):
-        ansi = request.DATA['cos_yml']
+        ansi = request.DATA['yml_full_distination']
         # ip = request.DATA['pro_group_name']
-        ip = "127.0.0.1"
-        extra_vars = {"user": "root", "ip": ip}
-        return self.one_common(request, ansi='/data/ansible/public_yml/' + ansi, extra_vars=extra_vars)
+        return self.one_common(request, ansi=ansi)
 
     @list_route(methods=['get', 'post'])
     def search_yml(self, request, pk=None):
+        yml_dir_all = []
         yml_set = []
-        yml_name = sh.ls('/data/ansible/public_yml').split()
-        for i in yml_name:
-            with open('/data/ansible/public_yml/' + i,'r') as f:
-                yml_set.append([i, f.readlines()[0].strip().split(':')[1]])
+        for i in request.DATA:
+            yml_dir_list = i['pro_ansi_yml'].split('/')
+            yml_dir_list.pop()
+            yml_dir = '/'.join(yml_dir_list) + '/costume'
+            yml_dir_all.append([yml_dir, i['pro_name']])
+        print yml_dir_all
+        for i,x in yml_dir_all:
+            if os.path.exists(i):
+                try:
+                    files = sh.ls(i).split()
+                except:
+                    pass
+                else:
+                    for j in files:
+                        print j
+                        with open(i + '/' + j,'r') as f:
+                            try:
+                                explain = f.readlines()[0].strip().split(':')[1]
+                            except:
+                                explain = 'no explanation'
+                            yml_set.append({'pro_name': x,
+                                            'yml_name': j,
+                                            'yml_full_distination': i + '/' + j,
+                                            'yml_explain': explain})
         return Response(yml_set)
 
 class Project_GroupViewSet(viewsets.ModelViewSet):
@@ -229,6 +256,41 @@ class Project_VarViewSet(viewsets.ModelViewSet):
 
     serializer_class = Project_VarSerializer
     queryset = Project_Var.objects.all()
+
+    def divide_math(self, usage, usage_mea, measure):
+        if usage >= 1024:
+            print usage
+            usage = round(float(usage)/1024, 2)
+            usage_mea = str(usage) + measure
+        return usage, usage_mea
+
+    def time_exchange(self, short_time):
+        import time
+        timeArray = time.localtime(short_time)
+        styletime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+        return styletime
+
+    @list_route(methods=['get', 'post'])
+    def upyun_get_info(self, request, pk=None):
+        auth_para = request.DATA
+        print auth_para
+        data_all = {}
+        while True:
+            try:
+                up = Upyun_Api(auth_para["space"], auth_para["username"], auth_para["password"])
+            except:
+                pass
+        data_all["dir"] = up.getlist(auth_para["dir"])
+        usage = up.usage()
+        usage_mea = str(usage) + 'B'
+        for mea in ['KB', 'MB', 'GB']:
+            usage, usage_mea = self.divide_math(usage, usage_mea, mea)
+        data_all["usage"] = usage
+        data_all["usage_mea"] = usage_mea
+        for i in data_all["dir"]:
+            print i
+            i["time_style"] = self.time_exchange(float(i["time"]))
+        return Response(data_all)
 
 
 class Process_ResetViewSet(viewsets.ModelViewSet):

@@ -37,6 +37,9 @@ urlpatterns += [
         ############### initial environment ################
         url(r'^init_env', init_env),
 
+        ############### initial environment ################
+        url(r'^upyun', upyun),
+
         ################ route ###################
         url(r'^mainpage/\d*', release_mainpage),
         # url(r'^ip_add_place', ip_add_place),

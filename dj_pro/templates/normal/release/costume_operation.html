@@ -1,47 +1,62 @@
 <div ng-controller='pull_code_ctrl'>
     <div class="alert alert-warning" role="alert">    
-        <div class="col-md-3 column">
+        <div class="col-md-2 column">
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    项目组名 </span>
         </div>
         <div class="col-md-3 column">
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    输入自定义yml </span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    输入自定义yml </span>
         </div>
         <div class="col-md-3 column">
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    操作 </span>
+            <span>&nbsp;&nbsp;    输入自定义yml的说明 </span>
         </div>
-        <div class="col-md-3 column">
+        <div class="col-md-2 column">
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    操作 </span>
+        </div>
+        <div class="col-md-2 column">
             <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    所花时长(秒)</span>
         </div>
         <br/>
     </div>
     <div class="col-md-12 column"></div>
-	<div class="col-md-12 column alert alert-info" role="alert">
-        <div class="col-md-3 column">
-            <h4>&nbsp;&nbsp;&nbsp;&nbsp;((project_group.pro_group_name))</h4>
-        <br/>
-        </div>
-        <div class="col-md-3 column">
-            <input class="form-control" ng-model='cos_yml'>
-        </div>
-        <div class="col-md-3 column">
-            <div class="col-md-2 column"></div>
-            <button class="btn btn-primary ((pull_show))" ng-click="yml_exe(project_group, cos_yml)">执行yml</button>
-        </div>
-        <div class="col-md-3 column">
-            <div class="col-md-3 column"></div>
-            <span ng-show="cost_time[i.pro_name]">共耗时 ((cost_time[i.pro_name]))</span>
+	<div class="col-md-12 column alert alert-info" role="alert" ng-init="search_yml()">
+        <div ng-repeat="i in yml_set" class="col-md-12 column">
+            <div class="col-md-2 column">
+                <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.pro_name))</h5>
+            </div>
+            <div class="col-md-3 column">
+                <h5 ng-show='!costome_hide[i.yml_full_distination]'>&nbsp;&nbsp;&nbsp;&nbsp;((i.yml_name)) <span class="glyphicon glyphicon-resize-full handpointer" ng-click="costomehide(i.yml_full_distination)" aria-hidden="true"></span></h5>
+                <h5 ng-show='costome_hide[i.yml_full_distination]'>&nbsp;&nbsp;&nbsp;&nbsp;((i.yml_full_distination)) <span class="glyphicon glyphicon-resize-small handpointer" ng-click="costomehide(i.yml_full_distination)" aria-hidden="true"></span></h5>
+            </div>
+            <div class="col-md-3 column">
+                <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.yml_explain))</h5>
+            </div>
+            <div class="col-md-2 column">
+                <div class="col-md-2 column"></div>
+                <button class="btn btn-primary ((pull_show))" ng-click="yml_exe(project_group, i.yml_full_distination)">执行</button>
+            </div>
+            <div class="col-md-2 column">
+                <div class="col-md-3 column"></div>
+                <span ng-show="cost_time[i.yml_full_distination]">耗时 ((cost_time[i.yml_full_distination]))</span>
+            </div>
+            <br/>
+            <hr/>
         </div>
     </div>
-    <div class="col-md-12 column alert alert-warning" role="alert">    
-        <div class="col-md-3 column">
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    yml列表 </span>
-        </div>
-        <div class="col-md-9 column">
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;    yml说明 </span>
-        </div>
-        <br/>
+    <div class="col-md-12 column alert alert-warning" role="alert">
+
+        <h5><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>自定义的功能添加规则：在相应release的发布的yml同级目录下，新建costome文件夹，在该文件夹下，任意写yml文件即可，请联系管理员。</h5>
     </div>
-    <div class="col-md-12 column alert alert-success" role="alert" ng-init="search_yml()">    
+    <!--
+        <div class="col-md-12 column alert alert-warning" role="alert">    
+            <div class="col-md-3 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    yml列表 </span>
+            </div>
+            <div class="col-md-9 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;    yml说明 </span>
+            </div>
+            <br/>
+        </div>
+    <div class="col-md-12 column alert alert-success" role="alert">    
         <div ng-repeat="i in yml_set">
             <div class="col-md-3 column">
                 <span>&nbsp;&nbsp;((i[0]))</span>
@@ -52,6 +67,7 @@
         <br/>
         </div>
     </div>
+    -->
     <div class="col-md-12 column" ng-show="wait_flag">
 	<span>((wait_msg))</span>
         <img ng-src="../../static/images/loading3.gif"  alt="" />

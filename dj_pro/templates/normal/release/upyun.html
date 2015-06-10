@@ -1,0 +1,88 @@
+<div ng-controller="upyun_control">
+    <div class="row col-sm-12 column">
+        <div seek-track class="slider progress">
+            <div  class="slider-bar progress-bar" role="progressbar" style="height:18px;width:((progress))%;">
+                <span>((progress|number:0))% </span>
+            </div>
+        </div>
+        <div class="col-md-12 column">
+            <div class="col-md-3 column">
+                <div class="col-md-4 column">
+                    <h5>空间名：</h5>
+                </div>
+                <div class="col-md-8 column">
+                    <input class="form-control" ng-model='up_sp'>
+                </div>
+            </div>
+            <div class="col-md-3 column">
+                <div class="col-md-4 column">
+                    <h5>用户名：</h5>
+                </div>
+                <div class="col-md-8 column">
+                    <input class="form-control" ng-model='up_un'>
+                </div>
+            </div>
+            <div class="col-md-3 column">
+                <div class="col-md-4 column">
+                    <h5>密码：</h5>
+                </div>
+                <div class="col-md-8 column">
+                    <input type="password" class="form-control" ng-model='up_pw'>
+                </div>
+            </div>
+            <div class="col-md-3 column">
+                <button class="btn btn-primary" ng-click="data_get('/')">登陆</button>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="alert alert-warning" role="alert">    
+            <h5>空间大小：((up_info.usage_mea)) </h5>
+            <div class="col-md-2 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    文件名 </span>
+            </div>
+            <div class="col-md-3 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    文件类型 </span>
+            </div>
+            <div class="col-md-3 column">
+                <span>&nbsp;&nbsp;    文件大小 </span>
+            </div>
+            <div class="col-md-2 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    文件创建时间 </span>
+            </div>
+            <div class="col-md-2 column">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    文件操作</span>
+            </div>
+            <br/>
+        </div>
+        <div class="col-md-12 column"></div>
+            <div class="col-md-12 column alert alert-info" role="alert" ng-init="search_yml()">
+            <div ng-repeat="i in up_info.dir" class="col-md-12 column">
+                <div class="col-md-2 column">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.name))</h5>
+                </div>
+                <div class="col-md-3 column">
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.type))</h5>
+                </div>
+                <div class="col-md-2 column">
+                    <div class="col-md-2 column"></div>
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.size))</h5>
+                </div>
+                <div class="col-md-2 column">
+                    <div class="col-md-3 column"></div>
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;((i.time_style))</h5>
+                </div>
+                <div class="col-md-2 column">
+                    <div class="col-md-3 column"></div>
+                    <h5>&nbsp;&nbsp;&nbsp;&nbsp;X</h5>
+                </div>
+                <br/>
+                <hr/>
+            </div>
+        </div>
+
+    </div>
+</div>

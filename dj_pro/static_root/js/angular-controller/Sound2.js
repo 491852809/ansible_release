@@ -1,5 +1,4 @@
-app.controller('Sound2_Ctrl', 
-   function ($scope,$timeout,Music,angularPlayer) {
+app.controller('Sound2_Ctrl', function ($scope,$timeout,Music,angularPlayer) {
     
     Music.query(function(musics){             //put on where values of query is going to deal with ;
         allmusic = [];

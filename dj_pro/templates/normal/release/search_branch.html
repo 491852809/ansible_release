@@ -16,6 +16,7 @@
                 </form>
                 <br/>
                 <button class="btn btn-info" ng-click="toggle_branch(i.pro_name, branches[i.pro_name+'show'])">显示所有版本: </button> 
+                <button class="btn btn-info" ng-click="git_pull(i.pro_ansi_codedir)">更新版本显示(并不切换)</button>
                 <li class="list-group-item list-group-item-success" ng-hide="branches[i.pro_name+'show']" ng-repeat="i in branches[i.pro_name]|filter:query">((i))</li>
             </ul>
         </accordion-group>

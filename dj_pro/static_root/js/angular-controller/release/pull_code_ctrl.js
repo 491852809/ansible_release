@@ -10,6 +10,10 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
     $scope.wait_msg = '';
     $scope.wait_flag = false;
     $scope.items_container = [];
+    $scope.simple_log = '';
+    $scope.complex_log = '';
+    $scope.error_log = '';
+
     Project_Item.query(function(items){
         for(i in items){
             if(items[i].pro_group == $scope.project_id){
@@ -123,7 +127,10 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
 // above is the initail program
 
     function common_post(url, ctype, pro){
-        console.log(1);
+        console.log(pro);
+        $scope.pull_show = 'disabled';
+        $scope.wait_msg = '请稍作等待，不要切换页面，否则无法看到日志';
+        $scope.wait_flag = true;
         $http({
             method: 'POST',
             url: url,
@@ -143,10 +150,23 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
                     };
                 };
             };
+            if(ctype ==='show_all'){
+                $scope.costome_hide = [];
+                for(i in result){
+                    $scope.costome_hide[result[i]['yml_full_distination']] = false;
+                }
+                console.log($scope.costome_hide);
+            };
             $scope.yml_set = result;
             console.log(result);
+            $scope.pull_show = '';
+            $scope.wait_flag = false;
+            $scope.wait_msg = '';
         }).error(function(err){
             console.log('error');
+            $scope.pull_show = '';
+            $scope.wait_flag = false;
+            $scope.wait_msg = '';
         });
     };
 
@@ -160,15 +180,15 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
             url: url,
             data: JSON.stringify(pro),
         }).success(function(result){
-	    $scope.simple_log += result[0];
-	    $scope.complex_log += result[1]
+	    $scope.simple_log += result[0] + '\n';
+	    $scope.complex_log += result[1] + '\n';
 	    $scope.pull_show = '';
 	    $scope.wait_msg = '';
 	    $scope.wait_flag = false;
         $scope.cost_time = [];
         $scope.cost_time[pro.pro_name] = result[2];
         console.log(pro.pro_name + $scope.cost_time[pro.pro_name]);
-        $scope.error_log += result[3];
+        $scope.error_log += result[3] + '\n';
         $scope.all_cost_time = result[2];
         console.log(result);
         console.log(1+$scope.error_log+1);
@@ -245,8 +265,8 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
             url: url,
             data: JSON.stringify(all_para),
         }).success(function(result){
-	        $scope.simple_log = result[0];
-	        $scope.complex_log = result[1]
+	        $scope.simple_log += result[0] + '\n';
+	        $scope.complex_log += result[1] + '\n';
             console.log(result);
 	        $scope.pull_show = '';
 	        $scope.wait_flag = false;
@@ -258,7 +278,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
                 $scope.cost_time[all_para[i].pro_name] = result[2][all_para[i].pro_name];
             };
             $scope.all_cost_time = result[2]['total'];
-            $scope.error_log = result[3];
+            $scope.error_log += result[3] + '\n';
             error_log = $scope.error_log.split('\n').join('');
             if(ctype ==  'backup'){
                 if(error_log != ''){
@@ -292,9 +312,26 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
     };
 
 // above is public function
+    $scope.costome_hide = false;
+
+    $scope.costomehide = function(i){
+        console.log(i);
+        $scope.costome_hide[i] = !$scope.costome_hide[i];
+        console.log($scope.costome_hide);
+    };
 
     $scope.search_yml = function(){
-        common_post('/release/project_item_api/search_yml/');
+        Project_Item.query(function(items){
+            items_container = [];
+            for(i in items){
+                if(items[i].pro_group == $scope.project_id){
+                    console.log(items[i]);
+                    items_container.push(items[i]);
+                };
+            };
+            console.log(items_container);
+            common_post('/release/project_item_api/search_yml/', 'show_all', items_container);
+        });
     };
 
     $scope.process_search_yml = function(){
@@ -359,11 +396,10 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
     };
 
     $scope.yml_exe = function(project_group, cos_yml){
-        if(cos_yml == undefined){
-            alert('yml不能为空');
-            return;
-            }
-        project_group.cos_yml = cos_yml;
+        console.log(cos_yml);
+        project_group.pro_name = cos_yml;
+        project_group.pro_group = project_group.pro_group_name;
+        project_group.yml_full_distination = cos_yml;
         console.log(project_group);
         one_common(project_group, '/release/project_item_api/yml_exe/');
     };

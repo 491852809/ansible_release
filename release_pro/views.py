@@ -58,3 +58,8 @@ def auth_pro(request):
 def init_env(request):
     if request.method == 'GET':
         return render(request, 'init_env.html')
+
+@api_view(['GET', 'POST'])
+def upyun(request):
+    if request.method == 'GET':
+        return render(request, 'upyun.html')
