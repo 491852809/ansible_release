@@ -54,7 +54,7 @@ class Upyun_Api(object):
     def usage(self):
         return self.up.usage()
 
-    @Up_Common('空间情况')
+    @Up_Common('文件删除')
     def delete(self, direc):
         try:
             self.delete(direc)
