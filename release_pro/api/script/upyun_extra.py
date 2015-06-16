@@ -3,7 +3,7 @@
 
 import upyun
 from functools import wraps
-#up = upyun.UpYun('testjj01', 'test1', 'targetoyes123', timeout=30, endpoint=upyun.ED_AUTO)
+
 
 def Up_Common(x=''):
     def Up_Deco(func):
@@ -79,7 +79,7 @@ class Upyun_Api(object):
 
 
 if __name__ == '__main__':
-    up = Upyun_Api('testjj01', 'test1', 'targetoyes123')
+    up = Upyun_Api('testjj0324wfr1', 'testsdfsdf1', 'tarsdfasfwegetoyes123')
     print up.getlist('/')
     print up.usage()
     print up.getinfo('/temp1/test1.file')
