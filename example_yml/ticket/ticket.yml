@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+    - name: piaotai {ticket} update web server (--exclude-file)
+      synchronize: src=/home/deploy/ticket/  dest=/data/web/ticket/ rsync_opts=--delete,--exclude-from=/data/ansible/public/excludefile

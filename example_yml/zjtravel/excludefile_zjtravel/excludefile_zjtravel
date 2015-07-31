@@ -1,0 +1,14 @@
+application/uploads
+application/uploads/*
+application/uploads.bak
+application/uploads.bak/*
+application/protected/admin/runtime
+application/protected/admin/runtime/*
+application/protected/front/runtime
+application/protected/front/runtime/*
+application/js/kindeditor/attached
+application/js/kindeditor/attached/*
+.git/
+.gitignore
+sql/
+.DS_Store

@@ -1,0 +1,12 @@
+- name: install memcached
+  yum: name=memcached enablerepo=remi state=present
+- name: install memcached-devel
+  yum: name=memcached-devel enablerepo=remi state=present
+- name: memcached Log stdout in /var/log/
+  shell: sed -i '/^OPTIONS=""/cOPTIONS=" -vv >> /var/log/memcached.log 2>&1 "' /etc/sysconfig/memcached
+- name: mkdir /var/log/memcached/
+  shell: mkdir -pv /var/log/memcached/
+- name: memcached.log 
+  template: src=memcached dest=/etc/logrotate.d/
+- name: start memcached
+  service: name=memcached enabled=yes state=started

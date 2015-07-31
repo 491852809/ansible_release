@@ -1,0 +1,13 @@
+- name: install nginx
+  yum: name=nginx.x86_64 state=present
+- name: Configure nginx file
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+- name: CPU
+  shell: grep "processor" /proc/cpuinfo| wc -l
+  register: CPU
+- name: worker_processes
+  shell: sed -i '/^worker_processes/cworker_processes {{ CPU.stdout }};' /etc/nginx/nginx.conf
+- name: fastcgi_params(200 error)
+  command: sed -i '/^fastcgi_param  REDIRECT_STATUS/a\fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;' /etc/nginx/fastcgi_params
+- name: nginx start
+  service: name=nginx enabled=yes state=started

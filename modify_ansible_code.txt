@@ -1,0 +1,12 @@
+/usr/share/ansible_plugins/callback_plugins/ 检查 是否存在log_release.py 脚本
+存在 脚本，将 插件进行 平台 集成
+   vi /data/Automation/lib/python2.7/site-packages/ansible/callbacks.py
+    callback_plugin.task = task     # 搜索这一行在其后面输入以下 两句
+log_add = []
+error_add = []
+log_unflock(runner)              # 搜索这一行在其后面输入以下 5 句
+  try:
+       log_add.append(msg2)
+  except:
+       pass
+  return msg2

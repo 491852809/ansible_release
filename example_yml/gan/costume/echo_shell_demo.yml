@@ -1,0 +1,9 @@
+- name: shell-test1231223_demo
+  remote_user: deploy
+  hosts: 127.0.0.1
+  tasks:
+  - name: echo something
+    shell: echo "111"
+  - name: error display
+    shell: cd sddfasdfsafs
+  

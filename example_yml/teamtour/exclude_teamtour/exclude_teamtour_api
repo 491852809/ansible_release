@@ -1,0 +1,9 @@
+application.log*
+application/assets
+application/assets/*
+application/uploads
+application/uploads/*
+application/protected/runtime
+application/protected/runtime/*
+.idea
+.git/

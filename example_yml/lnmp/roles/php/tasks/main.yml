@@ -1,0 +1,68 @@
+- name: install gd-last
+  yum: name=gd-last enablerepo=remi state=present
+- name: install php
+  yum: name=php state=present
+- name: install php-fpm
+  yum: name=php-fpm state=present
+- name: install php-common
+  yum: name=php-common state=present
+- name: install php-cli
+  yum: name=php-cli state=present
+- name: install php-mysql
+  yum: name=php-mysql state=present
+- name: install php-pdo
+  yum: name=php-pdo state=present
+- name: install php-mcrypt
+  yum: name=php-mcrypt state=present
+- name: install php-redis
+  yum: name=php-pecl-redis state=present
+- name: install php-bcmach
+  yum: name=php-bcmath state=present
+- name: install php-xml
+  yum: name=php-xml state=present
+- name: install php-xmlrpc
+  yum: name=php-xmlrpc state=present
+- name: install php-dba
+  yum: name=php-dba state=present
+- name: install php-gd
+  yum: name=php-gd state=present
+- name: install php-pecl-imagick
+  yum: name=php-pecl-imagick state=present
+- name: install php-mbstring
+  yum: name=php-mbstring state=present
+- name: install php-enchant
+  yum: name=php-enchant state=present
+- name: install php-enchant
+  yum: name=php-yaf state=present
+- name: install php-pecl-memcache
+  yum: name=php-pecl-memcache state=present
+- name: install php-pecl-xhprof
+  yum: name=php-pecl-xhprof state=present
+- name: install php-devel
+  yum: name=php-devel state=present
+- name: install php-memcached
+  yum: name=php-pecl-memcached state=present
+- name: install php-opcache
+  yum: name=php-opcache state=present
+- name: change PHP default_charset = UTF-8
+  command: sed -i '/^;default_charset/a\default_charset = "UTF-8"' /etc/php.ini 
+- name: change PHP timezone for PRC
+  command: sed -i '/^;date.timezone/cdate.timezone = "PRC"' /etc/php.ini
+- name: change PHP error_reporting for 'E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE'
+  command: sed -i '/^error_reporting/cerror_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE' /etc/php.ini 
+- name: change PHP Run User deploy
+  command: sed -i 's/apache/deploy/g' /etc/php-fpm.d/www.conf
+- name: PHP php-fpm pm change is static
+  command: sed -i '/^pm = dynamic/cpm = static' /etc/php-fpm.d/www.conf
+- name: print Memory
+  shell: free -m | grep Mem | awk '{print $2}'
+  register: MEM
+- name: print php-fpm 
+  shell: expr {{MEM.stdout}} \/ 50 + 1
+  register: PFM
+- name: PHP pm.max_children change Mem/50
+  command: sed -i '/^pm.max_children = 50/cpm.max_children = {{PFM.stdout}}' /etc/php-fpm.d/www.conf
+- name: chown deploy.deploy /var/lib/php
+  command: chown -R deploy.deploy /var/lib/php
+- name: service php-fpm start
+  service: name=php-fpm enabled=yes state=started

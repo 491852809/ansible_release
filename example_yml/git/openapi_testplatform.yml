@@ -1,0 +1,6 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+  - git: repo=git@xxx.xxx.xxx.xxx:openapi_testplatform  dest=/home/deploy/openapi_testplatform
+         version={{version}}

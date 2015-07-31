@@ -1,0 +1,6 @@
+- name: temporary_execute
+  remote_user: deploy
+  hosts: "{{ myhost }}"
+  tasks:
+  - name: excute some command
+    shell: "{{ command }}"

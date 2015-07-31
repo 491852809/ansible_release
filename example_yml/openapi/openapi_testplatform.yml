@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: piaotai {openapi_testplatform} update web server (--exclude-file)
+    synchronize: src=/home/deploy/openapi_testplatform/ dest=/data/web/openapi_testplatform/ rsync_opts=--delete

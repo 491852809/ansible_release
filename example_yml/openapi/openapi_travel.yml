@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: piaotai {openapi_travel} update web server (--exclude-file)
+    synchronize: src=/home/deploy/openapi_travel/ dest=/data/web/openapi_travel/ rsync_opts=--delete

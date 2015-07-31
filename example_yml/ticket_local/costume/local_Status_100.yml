@@ -1,0 +1,6 @@
+---
+- hosts: 192.168.1.100
+  remote_user: deploy
+  tasks:
+  - name: check Status
+    shell: grep "ticket-proxy" /data/web/setting/ticket_local.php 

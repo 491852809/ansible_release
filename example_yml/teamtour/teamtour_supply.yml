@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: teamtour {teamtour_supply} update web server (--exclude-file,--delete)
+    synchronize: src=/home/deploy/teamtour_supply/ dest=/data/web/teamtour_supply/  rsync_opts=--exclude-from=/data/ansible/teamtour/exclude_teamtour/exclude_teamtour_supply,--delete

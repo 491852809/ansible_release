@@ -1,0 +1,6 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+  - git: repo=git@xxx.xxx.xxx.xxx:ticket_local dest=/home/deploy/ticket_local/
+         version={{version}}

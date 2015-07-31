@@ -1,0 +1,9 @@
+- name: install redis
+  yum: name=redis enablerepo=remi state=present
+- name: stdout IP(eth0) in localhost
+  shell: ifconfig eth0 | grep "inet addr" | cut -d ':' -f2 | awk '{print $1}'
+  register: IP
+- name: changed redis.conf bind
+  shell: sed -i '/^bind /cbind {{IP.stdout}}' /etc/redis.conf
+- name:  service redis start
+  service: name=redis enabled=yes state=started

@@ -1,0 +1,26 @@
+- name: LNMP yumrepo
+  copy: src=LNMP.repo dest=/etc/yum.repos.d/
+- name: libselinux-python
+  yum: name=libselinux-python.x86_64 state=present
+- name: useradd deploy
+  user: name=deploy shell=/bin/bash
+- name: test to see if SeLinux is running
+  command: getenforce
+  register: sestatus
+  changed_when: false
+- name: copy history.sh to web
+  copy: src=history.sh dest=/tmp/
+- name: chmod +x /tmp/history.sh
+  shell: chmod +x /tmp/history.sh
+- name: /etc/profile backup
+  command: cp /etc/profile /tmp 
+- name: Record history operation
+  shell: bash /tmp/history.sh
+- name: copy sysctl.sh to web
+  copy: src=sysctl.sh dest=/tmp/
+- name: chmod +x /tmp/sysctl.sh
+  shell: chmod +x /tmp/sysctl.sh
+- name: /etc/profile backup
+  command: cp /etc/sysctl.conf /tmp
+- name: Record history operation
+  shell: bash /tmp/sysctl.sh

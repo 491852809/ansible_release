@@ -1,0 +1,9 @@
+---
+- hosts: test53
+  remote_user: deploy
+  sudo: yes
+  tasks:
+    - name: NGINX 
+      copy: src=/home/deploy/nginx/  dest=/etc/nginx/sites-enabled/
+    - name: nginx start
+      service: name=nginx enabled=yes state=reloaded

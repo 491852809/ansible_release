@@ -1,0 +1,7 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+  - name: git
+    git: repo=git@xxx.xxx.xxx.xxx:gan dest=/home/deploy/gan
+         version={{version}}

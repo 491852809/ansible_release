@@ -1,0 +1,6 @@
+---
+- hosts: test100
+  remote_user: deploy
+  tasks:
+  - name: php /srv/deploy/wxadmin/artisan migrate
+    shell: yes| php /srv/deploy/wxadmin/artisan migrate

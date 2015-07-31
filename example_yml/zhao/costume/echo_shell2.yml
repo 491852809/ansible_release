@@ -1,0 +1,7 @@
+- name: shell-test
+  remote_user: deploy
+  hosts: 127.0.0.1
+  tasks:
+  - name: echo something
+    shell: echo "111"
+  

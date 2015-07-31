@@ -1,0 +1,6 @@
+---
+- hosts: test100
+  remote_user: deploy
+  tasks:
+  - name: php /data/web/ticket_info/crontab/Process.php
+    shell: php /data/web/ticket_info/crontab/Process.php

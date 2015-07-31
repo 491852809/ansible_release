@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: wxadmin update wxadmin server (--exclude-file,delete)
+    synchronize: src=/home/deploy/wxadmin/ dest=/srv/deploy/wxadmin/ rsync_opts=--exclude-from=/data/ansible/wxadmin/excludefile

@@ -1,0 +1,7 @@
+- name: mysql
+  yum: name=mysql enablerepo=remi state=present
+- name: mysql-server
+  yum: name=mysql-server enablerepo=remi state=present 
+- name: mysqld start
+  service: name=mysqld enabled=yes state=started
+

@@ -1,0 +1,7 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: wxmanage  update wjd server (--exclude-file,delete)
+    #synchronize: src=/home/deploy/uptools/ dest=/home/deploy/uptools/ rsync_opts=--exclude=.git*
+    synchronize: src=/home/deploy/wjd/ dest=/srv/deploy/wjd/ rsync_opts=--exclude-from=/data/ansible/wjd/excludefile

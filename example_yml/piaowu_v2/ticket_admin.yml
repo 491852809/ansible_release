@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: piaotai {ticket_admin} update web server 
+    synchronize: src=/home/deploy/piaowu_v2/ticket_admin/ dest=/data/web/ticket_admin/ rsync_opts=--delete

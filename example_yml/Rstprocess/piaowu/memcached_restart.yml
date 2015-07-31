@@ -1,0 +1,7 @@
+---
+- hosts: web
+  remote_user: deploy
+  sudo: yes
+  tasks:
+  - name: service memcached restart 
+    service: name=memcached enabled=yes state=restarted

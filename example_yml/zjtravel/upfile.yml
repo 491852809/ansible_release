@@ -1,0 +1,6 @@
+---
+- hosts: web
+  remote_user: deploy
+  tasks:
+  - name: zjtravel update web server (--exclude-file,delete)
+    synchronize: src=/home/deploy/zjtravel/ dest=/data/web/zjtravel/ rsync_opts=--exclude-from=/data/ansible/zjtravel/excludefile_zjtravel/excludefile_zjtravel,--delete

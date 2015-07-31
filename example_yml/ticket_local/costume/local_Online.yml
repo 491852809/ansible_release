@@ -1,0 +1,8 @@
+---
+- hosts: 192.168.1.53
+  remote_user: deploy
+  tasks:
+  - name: Change Status
+    shell: mv /data/web/setting/ticket_local.php /data/web/setting/ticket_local.php.offline
+  - name: Online
+    shell: mv /data/web/setting/ticket_local.php.online /data/web/setting/ticket_local.php

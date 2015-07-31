@@ -1,0 +1,1 @@
+ALTER TABLE `orders` ADD `id_card` VARCHAR(20)  NULL  DEFAULT NULL  COMMENT '身份证'  AFTER `memo`;

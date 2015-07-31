@@ -1,0 +1,6 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+  - git: repo=git@xxx.xxx.xxx.xxx:ticket_order dest=/home/deploy/piaowu_v2/ticket_order
+         version={{version}}

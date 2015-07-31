@@ -1,0 +1,6 @@
+---
+- hosts: test53
+  remote_user: deploy
+  tasks:
+  - name: php /data/web/ticket_local/application/protected/yiic.php initdb account
+    shell: php /data/web/ticket_local/application/protected/yiic.php initdb account

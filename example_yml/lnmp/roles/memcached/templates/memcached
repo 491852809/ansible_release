@@ -1,0 +1,10 @@
+/var/log/memcached/*.log {
+    weekly
+    dateext
+    rotate 20
+    copytruncate
+    delaycompress
+    compress
+    notifempty
+    missingok
+}

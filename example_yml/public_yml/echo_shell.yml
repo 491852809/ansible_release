@@ -1,0 +1,9 @@
+- name: shell-test
+  remote_user: "{{ user }}"
+  hosts: "{{ ip }}"
+  tasks:
+  - name: echo something
+    shell: echo "111"
+  - name: error display
+    shell: cd sddfasdfsafs
+  

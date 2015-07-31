@@ -1,0 +1,11 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+    - name: shell
+      shell: date +%Y-%m-%d_%H_%M
+      register: Time
+    - name: gan backup to /data/zhao
+      shell: tar -zcf /data/backup/zhao{{Time.stdout}}.tar.gz zhaoyong chdir=/home/deploy/
+    - name: Delete zhao.tar.gz
+      shell: find /data/backup/ -mtime +8 -name "*.gz" -exec rm -vf {} >>/tmp/delete.txt \;

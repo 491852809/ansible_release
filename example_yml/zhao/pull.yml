@@ -1,0 +1,7 @@
+---
+- hosts: local
+  remote_user: deploy
+  tasks:
+  - name: git
+    git: repo=git@121.40.81.215:zhaoyong dest=/home/deploy/zhaoyong 
+         version={{version}}

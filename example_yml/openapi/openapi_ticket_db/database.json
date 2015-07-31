@@ -1,0 +1,6 @@
+{
+    "host": "192.168.1.100",
+    "user": "dbaroot",
+    "db_name": "openapi_ticket",
+    "password": "dbaroot20090606"
+}
