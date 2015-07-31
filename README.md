@@ -82,7 +82,9 @@ $ virtualenv /data/Automation/
 
 Create structure of database and put code to the virtual directory
 ```
-example:Put this github to /data/
+example:Put this github to /data/Automation
+source /data/Automation/bin/activate
+pip install -r requirements.txt
 cd /data/Automation/dj
 ./manage.py makemigrations release_pro
 ./manage.py migrate
