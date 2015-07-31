@@ -1,13 +1,13 @@
 # Platform of Automatic release 
 
-* take a short outlook of cover
-[!image](https://github.com/targetoyes/ansible_release/readgif/head.jpg)
+* take a short outlook of some cover
+[!image](https://github.com/targetoyes/ansible_release/blob/master/readgif/head.jpg)
 * other pages of pull
-[!image](https://github.com/targetoyes/ansible_release/readgif/pull.jpg)
-* other pages operations of database
-[!image](https://github.com/targetoyes/ansible_release/readgif/database.jpg)
-[!image](https://github.com/targetoyes/ansible_release/readgif/costome.png)
-[!image](https://github.com/targetoyes/ansible_release/readgif/log.png)
+[!image](https://github.com/targetoyes/ansible_release/blob/master/readgif/pull.jpg)
+* other pages operations of database,costome,log
+[!image](https://github.com/targetoyes/ansible_release/blob/master/readgif/database.jpg)
+[!image](https://github.com/targetoyes/ansible_release/blob/master/readgif/costome.png)
+[!image](https://github.com/targetoyes/ansible_release/blob/master/readgif/readgif/log.png)
 
 Consists of ansible, django, restframework, bootstrap3, angularjs, jquery, and so on.
 
