@@ -3,7 +3,7 @@
 
 import upyun
 from functools import wraps
-
+#up = upyun.UpYun('testjj01', 'test1', 'targetoyes123', timeout=30, endpoint=upyun.ED_AUTO)
 
 def Up_Common(x=''):
     def Up_Deco(func):
@@ -57,14 +57,13 @@ class Upyun_Api(object):
     @Up_Common('文件删除')
     def delete(self, direc):
         try:
-            self.delete(direc)
+            self.up.delete(direc)
         except Exception,e:
             return e
 
     @Up_Common('上传文件')
-    def put(self, yun_file, local_file):
-        with open(local_file, 'rb') as f:
-            res = self.up.put(yun_file, f, checksum=True)
+    def put(self, yun_file, file_body):
+        res = self.up.put(yun_file, file_body)
         return res
 
     @Up_Common('获取资源')
@@ -79,7 +78,7 @@ class Upyun_Api(object):
 
 
 if __name__ == '__main__':
-    up = Upyun_Api('testjj0324wfr1', 'testsdfsdf1', 'tarsdfasfwegetoyes123')
+    up = Upyun_Api('testjj01', 'test1', 'targetoyes123')
     print up.getlist('/')
     print up.usage()
     print up.getinfo('/temp1/test1.file')

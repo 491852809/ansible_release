@@ -9,7 +9,6 @@ routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item 
                 $scope.items_list.push(pro_items[i]);
             };
         };
-        console.log($scope.items_list);
         $scope.status = {
             isItemOpen: new Array($scope.items_list.length),
     	    open: false,
@@ -20,7 +19,6 @@ routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item 
     $scope.show_branch = false;
 
     function common_post(url, ctype, pro){
-        console.log(pro);
         $scope.pull_show = 'disabled';
         $scope.wait_msg = '请稍作等待，不要切换页面，否则无法看到日志';
         $scope.wait_flag = true;
@@ -43,22 +41,21 @@ routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item 
 
     $scope.toggle_branch = function(pro_name ,showhide){
         $scope.branches[pro_name+'show'] = !showhide;
-        console.log($scope.branches[pro_name+'show']);
-        console.log(pro_name+'show');
     };
 
     $scope.git_pull = function(i){
         item = {};
         item['dir'] = i;
-        console.log(item);
         common_post('/release/project_item_api/git_pull/', undefined, item);
     };
 
 
     $scope.nowbranch = {};
     $scope.branches = {};
+    $scope.db_name = {};
+    $scope.db_host = {};
+    $scope.db_msg = {};
     $scope.search_branch = function(pro){
-        console.log(pro);
         // return;
         $http({
                 method: 'POST',
@@ -71,11 +68,16 @@ routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item 
 			var showkey = $scope.items_list[i].pro_name + 'show';
 			$scope.nowbranch[key] = result[1];
 			$scope.branches[key] = result[0];
+            if(result[2] == 'not'){
+                $scope.db_msg[key] = '警告：json丢失，请在' + $scope.items_list[i].pro_ansi_release_yml.split('.')[0] + '_db/目录下创建database.json'
+            }else{
+                $scope.db_msg[key] = '';
+			    $scope.db_name[key] = result[2];
+			    $scope.db_host[key] = result[3];
+            };
 			$scope.branches[showkey] = false;
 		    };
 		};
-		console.log($scope.nowbranch);
-                console.log($scope.branches);
             }).error(function(err){
                 console.log('error');
             });
@@ -92,5 +94,6 @@ routeapp.controller('search_branch_ctrl', function($scope, $state, Project_Item 
                 console.log('error');
             }); 
     };
+
 
 });

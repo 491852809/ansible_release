@@ -34,5 +34,6 @@ app.controller('CookieCtrl', function ($scope,$window, $location, $rootScope, ip
             $window.location.href = "/login";
         };
     };
+
 });
 

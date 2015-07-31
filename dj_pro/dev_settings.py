@@ -16,6 +16,9 @@ DEV_INSTALLED_APPS = (
 #    'tags',
     #rest_framework
     'rest_framework',
+    'music_pro',
+    'servers',
+    'ipinfo',
     'release_pro',
     'auth_control',
 #    'snippets',

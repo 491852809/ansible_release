@@ -1,25 +1,28 @@
 routeapp.controller('init_env_control', function($scope, $http){
 
     selected_items = [];
+    $scope.progress = 0;
 
     function common(bro, url, ctype, i, num){
-        $scope.pull_show = 'disabled';
-        $scope.wait_msg = '请稍作等待，不要切换页面，否则无法看到日志';
-        $scope.wait_flag = true;
         i = typeof i !== 'undefined' ? i : 0;
-        console.log(bro);
-        console.log(i)
         if(ctype == 'multi'){
+            if(i >= num){
+                return;
+            };
             pro = bro[i];
             console.log(pro);
             i += 1;
-            progress_num += progress_num;
-            for(i = $scope.progress; i < progress_num - 1; i++){
-                    $scope.progress += 1;
-            };
+            console.log(i);
+            /*for(j = $scope.progress; j < progress_num - 1; j++){
+                $scope.progress += 1;
+            };*/
         }else{
             pro = bro;
         };
+        console.log(bro);
+        $scope.pull_show = 'disabled';
+        $scope.wait_msg = '请稍作等待，不要切换页面，否则无法看到日志';
+        $scope.wait_flag = true;
         $http({
             method: 'POST',
             url: url,
@@ -37,12 +40,13 @@ routeapp.controller('init_env_control', function($scope, $http){
             $scope.all_cost_time = result[2];
             console.log(result);
             console.log(1+$scope.error_log+1);
-            $scope.progress = progress_num;
+            //$scope.progress = progress_num;
             $scope.project_log += pro.process_vars + '  ';
             
-            if(ctype == 'mulit'){
-                common_insert(pro, url, ctype, i, progress_num);
-                if( progress_num >= 100 ){ $scope.progress = 100 };
+            if(ctype == 'multi'){
+                console.log(bro[i]);
+                common(bro, url, ctype, i, num);
+                //if( progress_num >= 100 ){ $scope.progress = 100 };
             };
         }).error(function(err){
             alert('error');
@@ -52,12 +56,6 @@ routeapp.controller('init_env_control', function($scope, $http){
         });
     };
     
-
-    function common_insert(item, url, ctype, i, num){
-        
-        common(item, url, ctype, i, num);
-    };
-
     function common_post(pro, url){
         $http({
             method: 'POST',
@@ -103,26 +101,48 @@ routeapp.controller('init_env_control', function($scope, $http){
 
     $scope.excute_selected = function(){
         $scope.progress = 0;
-        num = 0;
         $scope.project_log = '已完成';
-        $(".selected input:checked").each ( function() {
-            $scope.pro.myhost = $scope.init_ip;
-            console.log($scope.pro.myhost);
-            $scope.pro.myhost = '192.168.1.54';
-            if(typeof $scope.pro.myhost == 'undefined'){
+        $scope.myhost_list = $scope.init_ip.split("\n");
+        var rx=/^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
+        for(i in $scope.myhost_list){
+            if(!rx.test($scope.myhost_list[i])){
+                $scope.project_log = $scope.myhost_list[i] + "格式不正确";
                 return;
             };
-            $scope.pro.process_vars = $(this).val();
-            $scope.pro.pro_name = $(this).val();
-            selected_items.push($scope.pro);
-            num += 1; 
+        };
+        //$scope.pro.myhost = '192.168.1.54';
+        if(typeof $scope.myhost_list == 'undefined'){
+            return;
+        };
+        num = 0;
+        $(".selected input:checked").each ( function() {
+            bro = $scope.pro;
+            console.log($(this).val());
+            tmp_dict = {'process_vars': $(this).val(), 'pro_name': $(this).val()};
+            dist = $.extend(tmp_dict, $scope.pro);
+            console.log(dist);
+            selected_items.push(dist);
+            num += 1;
         });
-        progress_num = 100 / num;
-        console.log(progress_num);
-        common(selected_items, '/release/project_item_api/single_env_install/', 'multi', undefined, progress_num);
-    }
+        console.log(selected_items);
+        selected_addhost = [];
+            //$scope.pro.myhost = myhost_list[i];
+        angular.forEach($scope.myhost_list, function (x) { 
+            angular.forEach(selected_items, function (i,j) { 
+                console.log(x);
+                dist = '';
+                dist = $.extend({'myhost': x}, selected_items[j]);
+                console.log(dist);
+                selected_addhost.push(dist);
+            });
+            common(selected_addhost, '/release/project_item_api/single_env_install/', 'multi', undefined, num);
 
-        $scope.progress = 0;
+            console.log(selected_addhost);
+            selected_addhost = [];
+        });
+            //common(selected_addhost, '/release/project_item_api/single_env_install/', 'multi', undefined, num);
+    };
 
-    });
+
+});
 

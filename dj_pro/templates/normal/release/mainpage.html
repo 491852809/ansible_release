@@ -1,6 +1,14 @@
 <div ng-controller="TabsCtrl">
     <div class="col-md-2 alert alert-success" role="alert">
-        <img ng-src="../../../../static/images/neko2.jpg"  width="210" height="150"/>
+        <div ng-controller="upload" class="col-md-12 column">
+            <div ngf-drop ngf-select ng-model="mp3file" ng-change="upload(mp3file)"
+            ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true"
+            accept="image/*,application/pdf">
+                <img ng-src="../../../../static/images/neko2.jpg"  width="210" height="150" tooltip="直接拖曳图片到此，更换图片"  tooltip-trigger="mouseenter" tooltip-placement="right"/>
+                <br/>
+                <br/>
+            </div>
+        </div>
         <br/>
         <br/>
         <tabset vertical="true" type="pills">
@@ -12,7 +20,13 @@
         </tabset>
         <br/>
         <br/>
-        <img ng-src="../../../../static/images/neko1.jpg"  width="210" height="150"/>
+        <div ng-controller="upload" class="col-md-12 column">
+            <div ngf-drop ngf-select ng-model="mp3file" ng-change="upload(mp3file)"
+                ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="true"
+                accept="image/*,application/pdf">
+                <img ng-src="../../../../static/images/neko1.jpg"  width="210" height="150" tooltip="直接拖曳图片到此，更换图片"  tooltip-trigger="mouseenter" tooltip-placement="right"/>
+            </div>  
+        </div>  
         <br/>
         <br/>
     </div>

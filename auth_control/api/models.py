@@ -14,6 +14,8 @@ class Member(models.Model):
     user = models.CharField(max_length=50, unique=True)
     group_id = models.CharField(max_length=50, blank=True)
     permit_pro = models.CharField(max_length=50, blank=True)
+    above_img = models.ImageField(upload_to='up_img', blank=True)
+    bottom_img = models.ImageField(upload_to='down_img', blank=True)
 
     def __unicode__(self):
         return '%s' %(self.user)

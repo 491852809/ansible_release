@@ -190,8 +190,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
         console.log(pro.pro_name + $scope.cost_time[pro.pro_name]);
         $scope.error_log += result[3] + '\n';
         $scope.all_cost_time = result[2];
-        console.log(result);
-        console.log(1+$scope.error_log+1);
+        console.log('result[0]:' + result[0] + '\n' + 'result[1]:' + result[1] + '\n' + 'result[2]:' + result[2]);
         if(ctype ==  'backup'){
             if($scope.error_log != ''){
                 alert('备份未成功,' + $scope.error_log);
@@ -202,6 +201,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
             };
         };
 	    console.log(result);
+        alert("操作完成！");
 
         $http.post('/release/log_save_api/', {'username': loginname, 
                     'pro_group': $scope.project_id,
@@ -225,6 +225,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
         pro.version = version;
 	    console.log(version);
         one_common(pro, url, ctype)
+        alert("操作完成！");
     };
 
     function multi_common(url, ctype){
@@ -280,6 +281,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
             $scope.all_cost_time = result[2]['total'];
             $scope.error_log += result[3] + '\n';
             error_log = $scope.error_log.split('\n').join('');
+            console.log('result[0]:' + result[0] + '\n' + 'result[1]:' + result[1] + '\n' + 'result[2]:' + result[2]);
             if(ctype ==  'backup'){
                 if(error_log != ''){
                     alert('备份未成功,' + $scope.error_log);
@@ -298,6 +300,7 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
         }).error(function(err){
             alert('log add error');
         });
+        alert("操作完成！");
 
 
 
@@ -418,6 +421,14 @@ routeapp.controller('pull_code_ctrl', function($scope, $http, ipCookie, Project_
         });
         
     };
+
+    $scope.temporary_command = function(pro){
+        pro['pro_group'] = $scope.project_id;
+        pro['pro_name'] = $scope.project_id;
+        pro['pro_ansi_release_yml'] = '/data/ansible/temporary_command/common.yml';
+        console.log(pro);
+        one_common(pro,'/release/project_item_api/temporary_command/', 'temporary');
+    };  
 
 });
 

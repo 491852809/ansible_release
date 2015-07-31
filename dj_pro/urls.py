@@ -100,6 +100,15 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
 
+    url(r'^music/', include('music_pro.urls',
+                            namespace='music_pro')),
+
+    url(r'^servers/', include('servers.urls',
+                            namespace='servers')),
+
+    url(r'^ipinfo/', include('ipinfo.urls',
+                            namespace='ipinfo')),
+
     url(r'^release/', include('release_pro.urls',
                             namespace='release_pro')),
 

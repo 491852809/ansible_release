@@ -33,7 +33,7 @@ routeapp.controller('Log_Check_Ctrl', function ($scope, $window, $http, ipCookie
             window.open('/login','_blank');
         };
     };
-    console.log(231);
+
 
 });
 

@@ -1,4 +1,10 @@
 routeapp.controller('release_main', function($scope, Project_Group, ipCookie, Member, Family) {
+
+    $scope.url_redirect = function(url){
+        console.log(url);
+        window.location.href = url;
+    };
+
     $scope.project_groups = Project_Group.query();
     $scope.status = {
         isopen: false
@@ -49,14 +55,14 @@ routeapp.controller('release_main', function($scope, Project_Group, ipCookie, Me
             if(mem[i].user == master_name){
                 master_id = mem[i].id;
                 members = mem[i];
-                console.log(master_id);
+                console.log(master_name);
                 break;
             };
-        }
-        if(master_id == ''){
-            console.log('no user');
-        }else if(master_name == 'admin'){
+        };
+        if(master_name == 'admin'){
             $scope.permit_pro_set = Project_Group.query();
+        }else if(master_id == ''){
+            console.log('no user');
         }else{
             group_id = members.group_id
             permit_pro_single = members.permit_pro.split(',');

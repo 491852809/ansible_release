@@ -10,18 +10,17 @@
         </div>
         <div class="col-md-12 column">
             <div class="col-md-3 column">
-                <label>初始化系统ip：</label>
+                <label>初始化系统ip：(每行一个ip，部署前请test)</label>
             </div>
             <div class="col-md-3 column">
-                <input class="form-control" ng-model='init_ip'>
+                <textarea class="form-control" ng-model='init_ip' rows="6"></textarea>
             </div>
         </div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <div ng-init="find_items()"> 
+        <div class="col-md-12 column">
+            <br/>
+            <br/>
+        </div>
+        <div ng-init="find_items()" class="col-md-12 column"> 
             <div ng-repeat="i in yml_set">
                 <div class="col-md-3 column selected">                                                          
                     <input type="checkbox" class="css-checkbox" ng-model="i.Selected" id='selected ((i.item))' value="((i.item))">                                                                

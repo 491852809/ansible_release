@@ -135,6 +135,15 @@ a.remove-tipper {
     padding-top: 25px;
     margin: 10px;
 }
+.drop-box1 {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 1200px;
+    height: 100px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
 .dragover {
     border: 5px dashed blue;
 }
