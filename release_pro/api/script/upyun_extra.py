@@ -3,7 +3,7 @@
 
 import upyun
 from functools import wraps
-#up = upyun.UpYun('testjj01', 'test1', 'targetoyes123', timeout=30, endpoint=upyun.ED_AUTO)
+
 
 def Up_Common(x=''):
     def Up_Deco(func):
